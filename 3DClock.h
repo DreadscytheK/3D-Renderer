@@ -4,6 +4,8 @@
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #include <SDL.h>
+#include <SDL_image.h>
+//#include <SDL_ttf.h>
 #elif __APPLE__
 #include <TargetConditionals.h>
 #if TARGET_OS_MAC
@@ -23,6 +25,7 @@
 #include <string>
 #include <vector>
 #include <omp.h>
+#include <sstream>
 
 #pragma endregion
 
@@ -67,11 +70,11 @@ struct PointIndexWithZ
     float z;
 };
 
-struct IndecieWithZ
+struct Indice
 {
-    int p1, p2, p3;
+    float p1, p2, p3;
     float z;
-    unsigned char r, g, b;
+    unsigned char p1r, p1g, p1b, p2r, p2g, p2b, p3r, p3g, p3b;
 };
 
 struct EdgeWithZ
@@ -84,6 +87,7 @@ struct EdgeWithZ
 struct ModelSizes
 {
     int vertices, indices, edges, faces;
+    std::vector<int> indicePairs;
 };
 
 struct ProgramSettings
@@ -100,13 +104,9 @@ struct ProgramSettings
     int rotateZDirection;
 };
 
-struct Cylinder
+struct Prism
 {
-    Point3D position, scaling, rotation;
-};
-
-struct Cube
-{
+    int numberOfSides;
     Point3D position, scaling, rotation;
 };
 
@@ -119,6 +119,22 @@ SDL_Window* gWindow = NULL;
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
+
+//The surface contained by the window
+SDL_Surface* gScreenSurface = NULL;
+
+//The image we will load and show on the screen
+SDL_Surface* gHelloWorld = NULL;
+
+//Loads individual image as texture
+SDL_Texture* loadTexture(std::string path);
+
+SDL_Surface* loadSurface(std::string path);
+
+bool loadMedia();
+
+//Current displayed texture
+SDL_Texture* gTexture = NULL;
 
 #pragma region Constants
 
@@ -134,6 +150,8 @@ const int SDL_WINDOW_SETTINGS = SDL_WINDOW_METAL | SDL_WINDOW_MAXIMIZED | SDL_WI
 #else
 #   error "Unknown compiler"
 #endif
+
+std::vector<unsigned char> blank = { 0 };
 
 // Screen dimension
 int STARTING_SCREEN_WIDTH = 500;
@@ -161,7 +179,7 @@ int xRotation = 0;
 int yRotation = 0;
 int zRotation = 0;
 
-int modelChoice = 1;
+int modelChoice = 2;
 
 double degreesToRads = M_PI / 180;
 double radsToDegrees = 180 / M_PI;
@@ -208,6 +226,8 @@ std::vector<int> cubeIndices = {
 //Starts up SDL and creates window
 bool init();
 
+bool loadMedia();
+
 Point3D WaveFunc(float u, float v, double rotation);
 
 Point3D MultiWaveFunc(float u, float v, double rotation);
@@ -230,9 +250,7 @@ void randomizeEdgeColours(std::vector<unsigned char>& edgeColours);
 // Checks the scaling factor compared to the screen size
 void checkScalingFactor();
 
-void createCubeModel(Cube model, std::vector<unsigned char> faceColours, std::vector<Point3D>& finalModel);
-
-void createCylinderModel(Cylinder model, std::vector<unsigned char> faceColours, std::vector<Point3D>& finalModel);
+void createPrismModel(Prism model, std::vector<Point3D>& finalModel, std::vector<int>& prismEdges, std::vector<int>& prismIndices, ModelSizes& prismSizes, std::vector<unsigned char>& prismColour);
 
 //This method takes and returns a Point3D, it converts the 3D coordinates to 2D coordinates using a perspective algorithm
 Point3D PerspectiveProjection(Point3D& point);
@@ -259,9 +277,9 @@ void renderModelByEdges(std::vector<Point3D> projectedPointWithZ, std::vector<in
 
 void renderModel(double rotation, std::vector<Point3D> model, std::vector<int> indicies, std::vector<int> edges, ModelSizes modelSize, std::vector<unsigned char> faceColours, std::vector<unsigned char> edgeColours, ProgramSettings programSettings, Point3D positionShift);
 
-void sortFaces(std::vector<int> indicies, std::vector<Point3D> projectedPointWithZ, std::vector<IndecieWithZ>& arrayOfFaceIndicesWithZ, ModelSizes cubeSizes, std::vector<unsigned char> cubeFaceColours);
+void sortFaces(std::vector<int> indicies, std::vector<Point3D> projectedPointWithZ, std::vector<Indice>& arrayOfFaceIndicesWithZ, ModelSizes cubeSizes, std::vector<unsigned char> cubeFaceColours);
 
-void renderModelByIndicies(std::vector<Point3D> projectedPointWithZ, std::vector<int> cubeIndicesArr, std::vector<IndecieWithZ> arrayOfFaceIndicesWithZ, ModelSizes cubeSizes, std::vector<unsigned char> cubeFaceColours);
+void renderModelByIndices(std::vector<Point3D> projectedPointWithZ, std::vector<int> cubeIndicesArr, std::vector<Indice> arrayOfFaceIndicesWithZ, ModelSizes cubeSizes, std::vector<unsigned char> cubeFaceColours);
 
 #pragma endregion
 

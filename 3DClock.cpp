@@ -75,101 +75,70 @@ int main(int argc, char* args[])
 #pragma endregion
 
 #pragma region New Cube
-	Cube newCubeDimensions = {
-		{ 0, 0, 0 }, // Position
+	Prism newCubeDimensions = {
+		{ 4 },	      // Number of sides
+		{ 0, 0, 0 },  // Position
 		{ 1, 1, 1 },  // Scaling
-		{ 0, 0, 0 }    // Rotation
+		{ 0, 0, 0 }   // Rotation
 	};
 
 	std::vector<Point3D> cubeNewModel;
+	std::vector<int> cubeNewEdges;
+	std::vector<int> cubeNewIndices;
+
+	ModelSizes cubeNewSizes;
+
+	std::vector<unsigned char> cubeNewColour = { 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000,
+											     255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000,
+											     000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000,
+											     000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255,
+											     255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255, 255, 000, 255,
+											     000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, 000, 000, 255, };
+
 #pragma endregion
 
 #pragma region hour12
-	Cube hour12 = {
-		{ 0, 100, 2, }, // Position
+	Prism hour12 = {
+		{ 4 },				 // Number of sides
+		{ 0, 0, 0, },      // Position
 		{ 0.1, 0.2, 0.05 },  // Scaling
-		{ 0, 0, 0}    // Rotation
+		{ 0, 0, 0}           // Rotation
 	};
 
 	std::vector<Point3D> hour12Model;
+	std::vector<int> hour12Edges;
+	std::vector<int> hour12Indices;
+
+	ModelSizes hour12Sizes;
 
 
-	std::vector<unsigned char> clockHourColours = { 100,100,100 };
+	std::vector<unsigned char> hour12Colour = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+											    100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+											    100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+											    100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+											    100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+											    100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, };
+
 	std::vector<unsigned char> clockHourFaceColours = { 255,0,0, 255,0,0,  255,255,0, 255,255,0,  0,255,0, 0,255,0,  0,255,255, 0,255,255,  255,0,255, 255,0,255,  0,0,255, 0,0,255 };
-	std::vector<unsigned char> clockHourEdgeColours = { 255,0,0,  255,127,0,  255,255,0,  127,255,0,  0,255,0,  0,255,127,  0,255,255,  0,127,255,  255,0,255,  127,0,255,  0,0,255,  127,0,127 };
 #pragma endregion
 
 #pragma region Clock Face
-	Cylinder clockFaceDimensions = {
-		{ 0, 0, 0, }, // Position
+	Prism clockFaceDimensions = {
+		{ 16 },		      // Number of sides
+		{ 0, 0, 0, },     // Position
 		{ 0.2, 2, 0.2 },  // Scaling
-		{ 0, 0, 0}    // Rotation
+		{ 0, 0, 0}        // Rotation
 	};
 
 	std::vector<Point3D> clockFaceModel;
+	std::vector<unsigned char> clockColour;
 
-	std::vector<unsigned char> clockColour = { 67,67,67 };
+	std::vector<int> clockEdges;
+	std::vector<int> clockIndices;
 
-	std::vector<int> cylinderEdges = {
-		0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8,
-		8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 0,
-		16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24,
-		24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 30, 30, 31, 31, 16,
-		0, 16, 1, 17, 2, 18, 3, 19, 4, 20, 5, 21, 6, 22, 7, 23,
-		8, 24, 9, 25, 10, 26, 11, 27, 12, 28, 13, 29, 14, 30, 15, 31
-	};
-
-	std::vector<int> cylinderIndicies = {
-		0,1,15,
-		1,2,15,
-		2,15,14,
-		2,3,14,
-		3,14,13,
-		3,4,13,
-		4,13,12,
-		4,5,12,
-		5,12,11,
-		5,6,11,
-		6,11,10,
-		6,7,10,
-		7,10,9,
-		7,8,10, // Front
-
-		16, 17, 31,
-		17, 18, 31,
-		18, 31, 30,
-		18, 19, 30,
-		19, 30, 29,
-		19, 20, 29,
-		20, 29, 28,
-		20, 21, 28,
-		21, 28, 27,
-		21, 22, 27,
-		22, 27, 26,
-		22, 23, 26,
-		23, 26, 25,
-		23, 24, 26, // Back
-
-		16,17,0, 17,1,0,    // Side 1 (top)
-		17,18,1, 18,2,1,    // Side 2
-		18,19,2, 19,3,2,    // Side 3
-		19,20,3, 20,4,3,    // Side 4
-		20,21,4, 21,5,4,    // Side 5
-		21,22,5, 22,6,5,    // Side 6
-		22,23,6, 23,7,6,    // Side 7
-		23,24,7, 24,8,7,    // Side 8
-		24,25,8, 25,9,8,    // Side 9
-		25,26,9, 26,10,9,   // Side 10
-		26,27,10, 27,11,10, // Side 11
-		27,28,11, 28,12,11, // Side 12
-		28,29,12, 29,13,12, // Side 13
-		29,30,13, 30,14,13, // Side 14
-		30,31,14, 31,15,14, // Side 15
-		31,16,15, 16,0,15, // Side 16
-	};
+	ModelSizes clockSizes;
 
 	std::vector<unsigned char> cylinderFaceColours = { 255,0,0 };
-
 	std::vector<unsigned char> cylinderEdgeColours = { 255,0,0 };
 #pragma endregion
 
@@ -237,15 +206,16 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
+	//loadMedia();
 
 	// Seed the random number generator with the current time
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
 
 	//Creating cube and cylinder test models
-	createCubeModel(hour12, cubeFaceColours, hour12Model);
-	createCubeModel(newCubeDimensions, cubeFaceColours, cubeNewModel);
-	createCylinderModel(clockFaceDimensions, cylinderFaceColours, clockFaceModel);
+	//createPrismModel(hour12, hour12Model, hour12Edges, hour12Indices, hour12Sizes, blank);
+	createPrismModel(newCubeDimensions, cubeNewModel, cubeNewEdges, cubeNewIndices, cubeNewSizes, blank);
+	createPrismModel(clockFaceDimensions, clockFaceModel, clockEdges, clockIndices, clockSizes, clockColour);
 
 	//Event handler
 	SDL_Event e;
@@ -474,7 +444,7 @@ int main(int argc, char* args[])
 			}
 		}
 #pragma endregion
-	
+
 		Uint32 start_time, frame_time;
 		float fps;
 
@@ -492,26 +462,26 @@ int main(int argc, char* args[])
 			SDL_RenderClear(gRenderer);
 		}
 
+
+		//Render texture to screen
+		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+
 		switch (modelChoice) {
 		case 1:
-			//Renders the classic cube
-			renderModel(rotation, originalCubeModel, cubeIndices, cubeEdges, cubeSizes, clockHourFaceColours, cubeEdgeColours, programSettings, Point3D{ 0,0,0 });
+			////Renders the classic cube
+			//renderModel(rotation, originalCubeModel, cubeIndices, cubeEdges, cubeSizes, hour12Colour, hour12Colour, programSettings, Point3D{ 0,0,0 });
 			break;
 		case 2:
 			//Renders the new pos,scal,rot based cube
-			renderModel(rotation, cubeNewModel, cubeIndices, cubeEdges, cubeSizes, clockHourFaceColours, cubeEdgeColours, programSettings, Point3D{ 0,0,0 });
+			renderModel(rotation, cubeNewModel, cubeIndices, cubeEdges, cubeNewSizes, cubeNewColour, cubeNewColour, programSettings, Point3D{ 0,0,0 });
 			break;
 		case 3:
-			dodecagonalPrismSizes.edges = dodecagonalPrismEdges.size() / 2;
-			dodecagonalPrismSizes.faces = (int)sqrt(dodecagonalPrismIndices.size());
-			dodecagonalPrismSizes.indices = dodecagonalPrismIndices.size();
-			dodecagonalPrismSizes.vertices = dodecagonalPrismModel.size();
-
-			renderModel(rotation, dodecagonalPrismModel, dodecagonalPrismIndices, dodecagonalPrismEdges, dodecagonalPrismSizes, dodecagonalPrismFaceColour, cubeEdgeColours, programSettings, Point3D{ 0,0,0 });
+			renderModel(rotation, hour12Model, hour12Indices, hour12Edges, hour12Sizes, hour12Colour, hour12Colour, programSettings, Point3D{ 0,0,0 });
+			//renderModel(rotation, clockFaceModel, clockIndices, clockEdges, clockSizes, clockColour, clockColour, programSettings, Point3D{ 0,0,0 });
 			break;
 		case 4:
-			renderModel(rotation, hour12Model, cubeIndices, cubeEdges, cubeSizes, clockHourColours, cubeEdgeColours, programSettings, Point3D{ 0,0,0 });
-			renderModel(rotation, clockFaceModel, cylinderIndicies, cylinderEdges, cylinderSizes, clockColour, clockColour, programSettings, Point3D{ 0,0,0 });
+			//renderModel(rotation, hour12Model, cubeIndices, cubeEdges, cubeSizes, clockHourColours, cubeEdgeColours, programSettings, Point3D{ 0,0,0 });
+			renderModel(rotation, clockFaceModel, clockIndices, clockEdges, clockSizes, clockColour, clockColour, programSettings, Point3D{ 0,0,0 });
 			break;
 		case 5:
 			renderMathFunction(points, pointsResolution, step, rotation, programSettings, Wave);
@@ -527,6 +497,8 @@ int main(int argc, char* args[])
 			break;
 		case 9:
 			renderMathFunction(points, pointsResolution, step, rotation, programSettings, Torus);
+			break;
+		default:
 			break;
 		}
 
@@ -594,9 +566,13 @@ void renderMathFunction(std::vector<Point3D>& points, int pointsResolution, floa
 		int yColour = 255;
 		int zColour = 255;
 
-		xColour = (abs(temp.x) / 1) * 255;
+		/*xColour = (abs(temp.x) / 1) * 255;
 		yColour = (abs(temp.y) / 1) * 255;
-		zColour = (abs(temp.z) / 1) * 255;
+		zColour = (abs(temp.z) / 1) * 255;*/
+
+		xColour = (temp.x / 1) * 255;
+		yColour = (temp.y / 1) * 255;
+		zColour = (temp.z / 1) * 255;
 
 		temp = rotateXAxis(temp, xRotation * degreesToRads);
 		temp = rotateYAxis(temp, yRotation * degreesToRads);
@@ -714,12 +690,99 @@ bool init()
 	//Initialize renderer color
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
+	//Initialize PNG loading
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		return false;
+	}
+	else
+	{
+		//Get window surface
+		gScreenSurface = SDL_GetWindowSurface(gWindow);
+	}
+
 	return true;
+}
+
+SDL_Surface* loadSurface(std::string path)
+{
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	if (loadedSurface == NULL)
+	{
+		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+	}
+	else
+	{
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface(loadedSurface, gScreenSurface->format, 0);
+		if (optimizedSurface == NULL)
+		{
+			printf("Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	return optimizedSurface;
+}
+
+SDL_Texture* loadTexture(std::string path)
+{
+	//The final texture
+	SDL_Texture* newTexture = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	if (loadedSurface == NULL)
+	{
+		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+	}
+	else
+	{
+		//Create texture from surface pixels
+		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		if (newTexture == NULL)
+		{
+			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	return newTexture;
+}
+
+bool loadMedia()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load PNG texture
+	gTexture = loadTexture("sponge (Custom).png");
+	if (gTexture == NULL)
+	{
+		printf("Failed to load texture image!\n");
+		success = false;
+	}
+
+	return success;
 }
 
 //Frees media and shuts down SDL
 void close()
 {
+	//Free loaded image
+	SDL_DestroyTexture(gTexture);
+	gTexture = NULL;
+
 	//Destroy window
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
@@ -766,83 +829,218 @@ Point3D OrthographicProjection(Point3D& point) {
 	};
 }
 
-void createCubeModel(Cube model, std::vector<unsigned char> faceColours, std::vector<Point3D>& finalModel) {
-	float calcXPos = (model.scaling.x / 2) + (model.position.x) / 100;
-	float calcXNeg = -(model.scaling.x / 2) + (model.position.x) / 100;
+void createPrismModel(Prism model, std::vector<Point3D>& finalModel, std::vector<int>& prismEdges, std::vector<int>& prismIndices, ModelSizes& prismSizes, std::vector<unsigned char>& prismColour) {
+	int numberOfSides = model.numberOfSides;
+	int indiceIndex = 0;
+	int currentIndice = 2;
+	int currentIndicePlusSides = currentIndice + numberOfSides;
+	float degreeShift = 360.0f / numberOfSides;
+	bool noColour = false;
+	//Size of the cylinderIndices array
+	int cylinderIndicesSize = ((numberOfSides - 2) * 6) + (numberOfSides * 6);
 
-	float calcYPos = (model.scaling.y / 2) + -(model.position.y) / 100;
-	float calcYNeg = -(model.scaling.y / 2) + -(model.position.y) / 100;
-
-	float calcZPos = (model.scaling.z / 2) + -(model.position.z) / 100;
-	float calcZNeg = -(model.scaling.z / 2) + -(model.position.z) / 100;
-
-	finalModel = {
-		{ calcXNeg, calcYNeg, calcZNeg },
-		{ calcXPos, calcYNeg, calcZNeg },
-		{ calcXPos, calcYPos, calcZNeg },
-		{ calcXNeg, calcYPos, calcZNeg},
-
-		{ calcXNeg, calcYNeg, calcZPos },
-		{ calcXPos, calcYNeg, calcZPos },
-		{ calcXPos, calcYPos, calcZPos },
-		{ calcXNeg, calcYPos, calcZPos}
-	};
-
-	if (model.rotation.x != 0) {
-		for (int rotationIndex = 0; rotationIndex < 8; rotationIndex++) {
-			finalModel[rotationIndex] = rotateXAxis(finalModel[rotationIndex], model.rotation.x * degreesToRads);
-		}
-	}
-
-	if (model.rotation.y != 0) {
-		for (int rotationIndey = 0; rotationIndey < 8; rotationIndey++) {
-			finalModel[rotationIndey] = rotateYAxis(finalModel[rotationIndey], model.rotation.y * degreesToRads);
-		}
-	}
-
-	if (model.rotation.z != 0) {
-		for (int rotationIndez = 0; rotationIndez < 8; rotationIndez++) {
-			finalModel[rotationIndez] = rotateZAxis(finalModel[rotationIndez], model.rotation.z * degreesToRads);
-		}
-	}
-}
-
-void createCylinderModel(Cylinder model, std::vector<unsigned char> faceColours, std::vector<Point3D>& finalModel) {
-
+	//Determines a single point the size of the object, likely on the left
 	float point1X = -(model.scaling.x / 2) + (model.position.x) / 100;
 	float point1Y = -(model.scaling.y / 2) + -(model.position.y) / 100;
 	float calcZPos = (model.scaling.z / 2) + -(model.position.z) / 100;
 	float calcZNeg = -(model.scaling.z / 2) + -(model.position.z) / 100;
 
-	Point3D point1Pos = { point1X, point1Y, calcZNeg };
-	Point3D point1Neg = { point1X, point1Y, calcZPos };
+	Point3D frontPoint = { point1X, point1Y, calcZNeg };
+	Point3D backPoint = { point1X, point1Y, calcZPos };
 
-	for (int rotationIndex = 0; rotationIndex < 16; rotationIndex++) {
-		Point3D temp = rotateZAxis(point1Pos, (22.5f * rotationIndex) * degreesToRads);
+	/* Setting up front and back points */
+
+	//Determines the location of vertices for front
+	for (int rotationIndex = 0; rotationIndex < numberOfSides; rotationIndex++) {
+		Point3D temp = frontPoint;
+		float rotation = (degreeShift * rotationIndex) * degreesToRads;
+
+		temp.x = cos(rotation) * model.scaling.x * frontPoint.x - sin(rotation) * frontPoint.y;
+		temp.y = sin(rotation) * frontPoint.x + cos(rotation) * model.scaling.y * frontPoint.y;
+
 		finalModel.push_back(temp);
+		//finalModel.push_back(rotateZAxis(frontPoint, (degreeShift * rotationIndex) * degreesToRads));
 	}
 
-	for (int rotationIndex = 0; rotationIndex < 16; rotationIndex++) {
-		Point3D temp = rotateZAxis(point1Neg, (22.5f * rotationIndex) * degreesToRads);
+	//Determines the location of vertices for back
+	for (int rotationIndex = 0; rotationIndex < numberOfSides; rotationIndex++) {
+		Point3D temp = backPoint;
+		float rotation = (degreeShift * rotationIndex) * degreesToRads;
+
+		temp.x = cos(rotation) * model.scaling.x * frontPoint.x - sin(rotation) * frontPoint.y;
+		temp.y = sin(rotation) * frontPoint.x + cos(rotation) * model.scaling.y * frontPoint.y;
+
 		finalModel.push_back(temp);
+
+		//finalModel.push_back(rotateZAxis(backPoint, (degreeShift * rotationIndex) * degreesToRads));
+	}
+	
+	/* Determining edge locations */
+
+	//Connects the vertices of the front face
+	for (int edgeIndex = 0; edgeIndex < numberOfSides; edgeIndex++) {
+		prismEdges.push_back(edgeIndex);
+		prismEdges.push_back(edgeIndex + 1);
 	}
 
-	if (model.rotation.x != 0) {
-		for (int rotationIndex = 0; rotationIndex < 8; rotationIndex++) {
-			finalModel[rotationIndex] = rotateXAxis(finalModel[rotationIndex], model.rotation.x * degreesToRads);
+	//Sets the last element of the previously allocated elements to 0
+	prismEdges[(numberOfSides * 2) - 1] = 0;
+
+	//Connects the vertices of the back face
+	for (int edgeIndex = numberOfSides; edgeIndex < numberOfSides * 2; edgeIndex++) {
+		prismEdges.push_back(edgeIndex);
+		prismEdges.push_back(edgeIndex + 1);
+	}
+
+	//Sets the last element of the previously allocated elements to the number of sides
+	prismEdges[(numberOfSides * 4) - 1] = numberOfSides;
+
+	//Connects the vertices between the front and back faces
+	for (int edgeIndex = 0; edgeIndex < numberOfSides; edgeIndex++) {
+		prismEdges.push_back(edgeIndex);
+		prismEdges.push_back(edgeIndex + numberOfSides);
+	}
+
+	/* Determining indice locations */
+
+	if (prismColour.size() == 1) {
+		noColour = true;
+	}
+
+	//Resizing the indices array so they can be filled
+	prismIndices.resize(cylinderIndicesSize, 0);
+	
+	//Filling the array with zeroes
+	std::fill(prismIndices.begin(), prismIndices.end(), 0);
+
+	if (noColour == false) {
+		//Resizing the colour array so they can be filled
+		prismColour.resize(cylinderIndicesSize * 3);
+		//Filling the array with zeroes
+		std::fill(prismColour.begin(), prismColour.end(), 0);
+
+		//Colours for the front face
+		for (int colourIndex = 0; colourIndex < ((numberOfSides - 2) * 9); colourIndex += 3) {
+			prismColour[colourIndex] = 255;
+		}
+
+		//Colours for the back face
+		for (int colourIndex = ((numberOfSides - 2) * 9) + 2; colourIndex < ((numberOfSides - 2) * 18); colourIndex += 3) {
+			prismColour[colourIndex] = 255;
+		}
+
+		float colourIncValue = (255 - 100) / numberOfSides * 2;
+		int colourIncIndex = 0;
+
+		for (int colourIndex = ((numberOfSides - 2) * 18) + 1; colourIndex < ((numberOfSides - 2) * 18) + (numberOfSides * 18); colourIndex += 18) {
+			prismColour[colourIndex] = 100 + (colourIncValue * colourIncIndex);
+			prismColour[colourIndex + 3] = 100 + (colourIncValue * colourIncIndex);
+			prismColour[colourIndex + 6] = 100 + (colourIncValue * colourIncIndex);
+
+			prismColour[colourIndex + 9] = 100 + (colourIncValue * colourIncIndex);
+			prismColour[colourIndex + 12] = 100 + (colourIncValue * colourIncIndex);
+			prismColour[colourIndex + 15] = 100 + (colourIncValue * colourIncIndex++);
 		}
 	}
 
-	if (model.rotation.y != 0) {
-		for (int rotationIndey = 0; rotationIndey < 8; rotationIndey++) {
-			finalModel[rotationIndey] = rotateYAxis(finalModel[rotationIndey], model.rotation.y * degreesToRads);
+	//These are always the same no matter how many sides
+	prismIndices[0] = 0;
+	prismIndices[1] = 1;
+	prismIndices[2] = numberOfSides - 1;
+
+	prismIndices[3] = 1;
+	prismIndices[4] = 2;
+	prismIndices[5] = numberOfSides - 1;
+	
+	//Calculating front face indices
+	//indiceIndex set to 6 to skip the previously done first 2 indices, 
+	//goes until all triangles are found, so numberOfSides - 2,
+	//multiplied by 3 because of how it is stored
+	for (indiceIndex = 6; indiceIndex < ((numberOfSides - 2) * 3); indiceIndex+=3) {
+		prismIndices[indiceIndex] = currentIndice;
+		prismIndices[indiceIndex + 2] = numberOfSides - currentIndice;
+		
+		if (indiceIndex % 2 == 1) {
+			prismIndices[indiceIndex + 1] = currentIndice + 1;
+			currentIndice++;
+		}
+		else {
+			prismIndices[indiceIndex + 1] = (numberOfSides + 1) - currentIndice;
 		}
 	}
 
-	if (model.rotation.z != 0) {
-		for (int rotationIndez = 0; rotationIndez < 8; rotationIndez++) {
-			finalModel[rotationIndez] = rotateZAxis(finalModel[rotationIndez], model.rotation.z * degreesToRads);
+	//These are always the same no matter how many sides
+	prismIndices[indiceIndex++] = numberOfSides;
+	prismIndices[indiceIndex++] = numberOfSides + 1;
+	prismIndices[indiceIndex++] = (numberOfSides * 2) - 1;
+								   
+	prismIndices[indiceIndex++] = numberOfSides + 1;
+	prismIndices[indiceIndex++] = numberOfSides + 2;
+	prismIndices[indiceIndex++] = (numberOfSides * 2) - 1;
+
+	currentIndice = 2;
+
+	for (indiceIndex; indiceIndex < ((numberOfSides - 2) * 6); indiceIndex+=3) {
+		prismIndices[indiceIndex] = currentIndicePlusSides;
+		prismIndices[indiceIndex + 2] = numberOfSides * 2 - currentIndice;
+
+		if (numberOfSides % 2 == 0) {
+			if (indiceIndex % 2 == 1) {
+				prismIndices[indiceIndex + 1] = currentIndicePlusSides + 1;
+				currentIndicePlusSides++;
+				currentIndice++;
+			}
+			else {
+				prismIndices[indiceIndex + 1] = ((numberOfSides * 2) + 1) - currentIndice;
+			}
 		}
+		else {
+			if (indiceIndex % 2 == 0) {
+				prismIndices[indiceIndex + 1] = currentIndicePlusSides + 1;
+				currentIndicePlusSides++;
+				currentIndice++;
+			}
+			else {
+				prismIndices[indiceIndex + 1] = ((numberOfSides * 2) + 1) - currentIndice;
+			}
+		}
+	}
+
+	currentIndice = 0;
+
+	for (indiceIndex; indiceIndex < ((numberOfSides - 2) * 6) + ((numberOfSides - 1) * 6); indiceIndex += 6) {
+		prismIndices[indiceIndex] = currentIndice + numberOfSides;
+		prismIndices[indiceIndex + 1] = currentIndice + numberOfSides + 1;
+		prismIndices[indiceIndex + 2] = currentIndice;
+
+		prismIndices[indiceIndex + 3] = currentIndice + numberOfSides + 1;
+		prismIndices[indiceIndex + 4] = currentIndice + 1;
+		prismIndices[indiceIndex + 5] = currentIndice;
+		currentIndice++;
+	}
+
+	prismIndices[indiceIndex++] = (numberOfSides * 2) - 1;
+	prismIndices[indiceIndex++] = numberOfSides;
+	prismIndices[indiceIndex++] = numberOfSides - 1;
+								  
+	prismIndices[indiceIndex++] = numberOfSides;
+	prismIndices[indiceIndex++] = 0;
+	prismIndices[indiceIndex] = numberOfSides - 1;
+
+	/* Model size stuff */
+
+	prismSizes.edges = prismEdges.size()/2;
+	prismSizes.faces = numberOfSides + 2;
+	prismSizes.indices = prismIndices.size();
+	prismSizes.vertices = numberOfSides * 2;
+
+	//Tells the renderer about groups of triangles for each face,
+	//For example a 16 sides polygon has 14 triangles for the front and another 14 for the back,
+	//and 2 triangles per side face, so 2 * 16, it would be listed like 14, 14, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+	prismSizes.indicePairs.push_back(numberOfSides - 2);
+	prismSizes.indicePairs.push_back(numberOfSides - 2);
+	for (int indicePairIndex = 0; indicePairIndex < numberOfSides; indicePairIndex++) {
+		prismSizes.indicePairs.push_back(2);
 	}
 }
 
@@ -999,11 +1197,11 @@ void renderModel(double rotation, std::vector<Point3D> model, std::vector<int> i
 	calculateObjectProjection(projectedPointWithZ, rotation, model, modelSize, positionShift, programSettings);
 
 	if (programSettings.renderByFaces == 1) {
-		std::vector<IndecieWithZ> arrayOfFaceIndicesWithZ;
+		std::vector<Indice> IndiceArray;
 
-		sortFaces(indicies, projectedPointWithZ, arrayOfFaceIndicesWithZ, modelSize, faceColours);
+		sortFaces(indicies, projectedPointWithZ, IndiceArray, modelSize, faceColours);
 
-		renderModelByIndicies(projectedPointWithZ, indicies, arrayOfFaceIndicesWithZ, modelSize, faceColours);
+		renderModelByIndices(projectedPointWithZ, indicies, IndiceArray, modelSize, faceColours);
 	}
 
 	if (programSettings.renderByEdges == 1) {
@@ -1017,28 +1215,68 @@ void renderModel(double rotation, std::vector<Point3D> model, std::vector<int> i
 }
 
 //This function sorts the faces by their corresponding furthest z value
-void sortFaces(std::vector<int> indicies, std::vector<Point3D> projectedPointWithZ, std::vector<IndecieWithZ>& arrayOfFaceIndicesWithZ, ModelSizes modelSize, std::vector<unsigned char> faceColours)
+void sortFaces(std::vector<int> indicies, std::vector<Point3D> projectedPointWithZ, std::vector<Indice>& arrayOfFaceIndicesWithZ, ModelSizes modelSize, std::vector<unsigned char> faceColours)
 {
-	IndecieWithZ temp;
+	Indice temp;
+	int colourIndex = 0;
+	int zAdditionIndex = 0;
+	int indicePairIndex = 0;
+	std::vector<float> tempZArray(modelSize.indicePairs.size());
+	std::fill(tempZArray.begin(), tempZArray.end(), 0);
 
 	for (int i = 0; i < modelSize.indices / 3; i++)
 	{
-		int colourIndex = (i * 3) % faceColours.size();
+		if (zAdditionIndex == 0) {
+			zAdditionIndex = modelSize.indicePairs[indicePairIndex++];
+		}
 
 		temp.p1 = indicies[i * 3];
 		temp.p2 = indicies[(i * 3) + 1];
 		temp.p3 = indicies[(i * 3) + 2];
-		temp.r = faceColours[colourIndex];
-		temp.g = faceColours[colourIndex + 1];
-		temp.b = faceColours[colourIndex + 2];
 
-		temp.z = projectedPointWithZ[indicies[i * 3]].z;
+		temp.p1r = faceColours[colourIndex++];
+		temp.p1g = faceColours[colourIndex++];
+		temp.p1b = faceColours[colourIndex++];
+
+		temp.p2r = faceColours[colourIndex++];
+		temp.p2g = faceColours[colourIndex++];
+		temp.p2b = faceColours[colourIndex++];
+
+		temp.p3r = faceColours[colourIndex++];
+		temp.p3g = faceColours[colourIndex++];
+		temp.p3b = faceColours[colourIndex++];
+
+		tempZArray[indicePairIndex - 1] += projectedPointWithZ[indicies[i * 3]].z;
+		tempZArray[indicePairIndex - 1] += projectedPointWithZ[indicies[(i * 3) + 1]].z;
+		tempZArray[indicePairIndex - 1] += projectedPointWithZ[indicies[(i * 3) + 2]].z;
+
+		/*temp.z = projectedPointWithZ[indicies[i * 3]].z;
 		temp.z += projectedPointWithZ[indicies[(i * 3) + 1]].z;
 		temp.z += projectedPointWithZ[indicies[(i * 3) + 2]].z;
-		temp.z /= 3;
+		temp.z /= 3;*/
+
+		zAdditionIndex--;
 
 		arrayOfFaceIndicesWithZ.push_back(temp);
 	}
+
+	for (int tempZIndex = 0; tempZIndex < modelSize.indicePairs.size(); tempZIndex++) {
+		tempZArray[tempZIndex] /= modelSize.indicePairs[tempZIndex];
+	}
+
+	int index = 0;
+
+	for (int i = 0; i < modelSize.indices / 3; i++)
+	{
+		if (zAdditionIndex == 0) {
+			zAdditionIndex = modelSize.indicePairs[index++];
+		}
+
+		arrayOfFaceIndicesWithZ[i].z = tempZArray[index - 1];
+
+		zAdditionIndex--;
+	}
+
 
 	int i, j;
 	bool swapped;
@@ -1046,7 +1284,7 @@ void sortFaces(std::vector<int> indicies, std::vector<Point3D> projectedPointWit
 		swapped = false;
 		for (j = 0; j < modelSize.indices / 3 - i - 1; j++) {
 			if (arrayOfFaceIndicesWithZ[j].z > arrayOfFaceIndicesWithZ[j + 1].z) {
-				IndecieWithZ temp = arrayOfFaceIndicesWithZ[j + 1];
+				Indice temp = arrayOfFaceIndicesWithZ[j + 1];
 				arrayOfFaceIndicesWithZ[j + 1] = arrayOfFaceIndicesWithZ[j];
 				arrayOfFaceIndicesWithZ[j] = temp;
 				swapped = true;
@@ -1060,28 +1298,26 @@ void sortFaces(std::vector<int> indicies, std::vector<Point3D> projectedPointWit
 	}
 }
 
-void renderModelByIndicies(std::vector<Point3D> projectedPointWithZ, std::vector<int> cubeIndicesArr, std::vector<IndecieWithZ> arrayOfFaceIndicesWithZ, ModelSizes cubeSizes, std::vector<unsigned char> cubeFaceColours) {
-
-	unsigned char colour1 = cubeFaceColours[0];
-	unsigned char colour2 = cubeFaceColours[1];
-	unsigned char colour3 = cubeFaceColours[2];
+void renderModelByIndices(std::vector<Point3D> projectedPointWithZ, std::vector<int> cubeIndicesArr, std::vector<Indice> arrayOfFaceIndicesWithZ, ModelSizes cubeSizes, std::vector<unsigned char> cubeFaceColours) {
 	int innerIndex = 0;
-
 	for (int faceIndex = 0; faceIndex < cubeSizes.indices / 3; faceIndex++) {
-		int colourIndex = (faceIndex * 3) % cubeFaceColours.size();
 
-		colour1 = cubeFaceColours[colourIndex];
-		colour2 = cubeFaceColours[colourIndex + 1];
-		colour3 = cubeFaceColours[colourIndex + 2];
+
+		/*std::vector< SDL_Vertex > tri =
+		{
+			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p1].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p1].y}, SDL_Color{arrayOfFaceIndicesWithZ[faceIndex].p1r, arrayOfFaceIndicesWithZ[faceIndex].p1g, arrayOfFaceIndicesWithZ[faceIndex].p1b, 255}, SDL_FPoint{0},},
+			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p2].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p2].y}, SDL_Color{arrayOfFaceIndicesWithZ[faceIndex].p2r, arrayOfFaceIndicesWithZ[faceIndex].p2g, arrayOfFaceIndicesWithZ[faceIndex].p2b, 255}, SDL_FPoint{0},},
+			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p3].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p3].y}, SDL_Color{arrayOfFaceIndicesWithZ[faceIndex].p3r, arrayOfFaceIndicesWithZ[faceIndex].p3g, arrayOfFaceIndicesWithZ[faceIndex].p3b, 255}, SDL_FPoint{0},},
+		};*/
 
 		std::vector< SDL_Vertex > tri =
 		{
-			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p1].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p1].y}, SDL_Color{arrayOfFaceIndicesWithZ[faceIndex].r, arrayOfFaceIndicesWithZ[faceIndex].g, arrayOfFaceIndicesWithZ[faceIndex].b, 255}, SDL_FPoint{0},},
-			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p2].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p2].y}, SDL_Color{arrayOfFaceIndicesWithZ[faceIndex].r, arrayOfFaceIndicesWithZ[faceIndex].g, arrayOfFaceIndicesWithZ[faceIndex].b, 255}, SDL_FPoint{0},},
-			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p3].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p3].y}, SDL_Color{arrayOfFaceIndicesWithZ[faceIndex].r, arrayOfFaceIndicesWithZ[faceIndex].g, arrayOfFaceIndicesWithZ[faceIndex].b, 255}, SDL_FPoint{0},},
+			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p1].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p1].y}, SDL_Color{cubeFaceColours[0], cubeFaceColours[1], cubeFaceColours[2], 255}, SDL_FPoint{0},},
+			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p2].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p2].y}, SDL_Color{cubeFaceColours[0], cubeFaceColours[1], cubeFaceColours[2], 255}, SDL_FPoint{0},},
+			{ SDL_FPoint{ projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p3].x, projectedPointWithZ[arrayOfFaceIndicesWithZ[faceIndex].p3].y}, SDL_Color{cubeFaceColours[0], cubeFaceColours[1], cubeFaceColours[2], 255}, SDL_FPoint{0},},
 		};
 
-		SDL_RenderGeometry(gRenderer, nullptr, tri.data(), (int)tri.size(), nullptr, 0);
+		SDL_RenderGeometry(gRenderer, gTexture, tri.data(), (int)tri.size(), nullptr, 0);
 		//SDL_RenderPresent(gRenderer);
 	}
 }
